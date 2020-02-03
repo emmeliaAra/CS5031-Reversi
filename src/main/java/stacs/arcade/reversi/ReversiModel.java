@@ -3,14 +3,16 @@ package stacs.arcade.reversi;
 /**
  * Implementation of the model for the Othello game.
  * 
- * @author <your matric number here, not your email address!>
+ * @author !your matric number here, not your email address!
  */
 public class ReversiModel {
 
 	public enum PlayerColour {BLACK, WHITE};
 	
-	private PlayerColour winner = null;
-	
+    /**
+     * Needs a simple constructor, required for construction by the
+     * class that contains the tests. 
+     */
 	public ReversiModel() {		
 	}
 	

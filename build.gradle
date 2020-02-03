@@ -1,0 +1,52 @@
+/*
+ * Build file for StArcade
+ */
+
+plugins { 
+	id 'java'        // https://docs.gradle.org/current/userguide/java_plugin.html
+    id 'eclipse'     // https://docs.gradle.org/current/userguide/eclipse_plugin.html
+    id 'idea'        // https://docs.gradle.org/current/userguide/idea_plugin.html
+}
+
+ext { // define variables for version number of different components
+	junit_version = '5.5.2'
+}
+
+java { // https://docs.gradle.org/current/userguide/java_plugin.html#sec:java-extension
+	sourceCompatibility = JavaVersion.VERSION_11
+	targetCompatibility = JavaVersion.VERSION_11
+	withJavadocJar()
+	withSourcesJar()	
+}
+
+repositories { // https://docs.gradle.org/current/userguide/declaring_repositories.html
+    jcenter()
+    mavenCentral()
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+eclipse {
+    classpath {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+ 
+dependencies { // https://docs.gradle.org/current/userguide/declaring_dependencies.html
+	testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_version}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_version}"
+}
+
+test { // https://docs.gradle.org/5.2.1/userguide/java_testing.html#using_junit5 
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
+

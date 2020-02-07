@@ -13,6 +13,9 @@ public class ReversiModel {
 
 	private static final int BOARD_WIDTH = 8;
 	private static final int BOARD_HEIGHT = 8;
+	private static final int CONSTRAINED_MOVES = 4;
+	private static final int BOUNDARY_A = 3;
+	private static final int BOUNDARY_B = 4;
 	private int totalMoves;
 
     /**
@@ -55,7 +58,7 @@ public class ReversiModel {
 	public void makeMove(PlayerColour player, int x, int y) throws IllegalMoveException {
 
 		//Make sure that the first 4 moves are placed on fields that their coordinates only contain 3s and/or 4s
-		if(totalMoves < 4 && !(x == 3 || x == 4) && !(y == 3 || y == 4)){
+		if(totalMoves < CONSTRAINED_MOVES && !(x == BOUNDARY_A || x == BOUNDARY_B) && !(y == BOUNDARY_A || y == BOUNDARY_B)){
 			throw new IllegalMoveException("This is an illegal move - First 4 pieces must be placed in the middle of the field");
 		}
 		totalMoves ++;

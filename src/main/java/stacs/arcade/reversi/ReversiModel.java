@@ -57,13 +57,24 @@ public class ReversiModel {
 	 */
 	public void makeMove(PlayerColour player, int x, int y) throws IllegalMoveException {
 
-		//Make sure that the first 4 moves are placed on fields that their coordinates only contain 3s and/or 4s
-		if(totalMoves < CONSTRAINED_MOVES && !(x == BOUNDARY_A || x == BOUNDARY_B) && !(y == BOUNDARY_A || y == BOUNDARY_B)){
-			throw new IllegalMoveException("This is an illegal move - First 4 pieces must be placed in the middle of the field");
+		/* Check for moves outside the boundaries
+		 * 		-> If field does not exist, throw illegalMoveException.
+		 * 		-> Otherwise check if this is one of the first moves and act appropriately.
+		 */
+
+		if(x >= 0 && x <= BOARD_WIDTH && y >= 0 && y <= BOARD_HEIGHT){
+
+			//Make sure that the first 4 moves are placed on fields that their coordinates only contain 3s and/or 4s
+			if(totalMoves < CONSTRAINED_MOVES && !(x == BOUNDARY_A || x == BOUNDARY_B) && !(y == BOUNDARY_A || y == BOUNDARY_B)){
+				throw new IllegalMoveException("This is an illegal move - First 4 pieces must be placed in the middle of the field");
+			}
+			totalMoves ++;
+		}else {
+			throw new IllegalMoveException("This is an illegal move - Field does not exists");
 		}
-		totalMoves ++;
+
 	}
-	
+
 	/**
 	 * Return the number of black stones currently on the board.
 	 */

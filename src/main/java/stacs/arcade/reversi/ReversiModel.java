@@ -3,23 +3,37 @@ package stacs.arcade.reversi;
 /**
  * Implementation of the model for the Othello game.
  * 
- * @author !your matric number here, not your email address!
+ * @author 190023753
  */
 public class ReversiModel {
 
-	public enum PlayerColour {BLACK, WHITE};
-	
+	public enum PlayerColour {BLACK, WHITE}
+	private PlayerColour[][] board = null;
+	private PlayerColour nextPlayerToMove;
+
+	private static final int BOARD_WIDTH = 8;
+	private static final int BOARD_HEIGHT = 8;
+
     /**
      * Needs a simple constructor, required for construction by the
      * class that contains the tests. 
      */
-	public ReversiModel() {		
+	public ReversiModel() {
+		initializeBoard();
 	}
-	
+
+	private void initializeBoard(){
+		//Initialize board and set Black as the first playerToMove
+		board = new PlayerColour[BOARD_HEIGHT][BOARD_WIDTH];
+		nextPlayerToMove = PlayerColour.BLACK;
+	}
+
 	/**
 	 * Returns the colour of the piece at the given position, null if no piece is on this field.
 	 */
 	public PlayerColour getAt(int x, int y) {
+		if(board[x][y] != null)
+			return board[x][y];
 		return null;
 	}
 	

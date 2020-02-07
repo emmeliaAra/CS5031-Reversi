@@ -68,7 +68,7 @@ public class ReversiModelTests {
 	public void mustRejectMoveOutOfBounds() {
 		assertThrows(IllegalMoveException.class, () -> {
 			this.model.makeMove(BLACK, 8, 1);	
-		});	
+		});
 		assertThrows(IllegalMoveException.class, () -> {
 			this.model.makeMove(BLACK, 1, 8);	
 		});	

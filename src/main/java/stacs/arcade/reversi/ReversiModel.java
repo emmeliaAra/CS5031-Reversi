@@ -13,6 +13,7 @@ public class ReversiModel {
 
 	private static final int BOARD_WIDTH = 8;
 	private static final int BOARD_HEIGHT = 8;
+	private int totalMoves;
 
     /**
      * Needs a simple constructor, required for construction by the
@@ -20,9 +21,11 @@ public class ReversiModel {
      */
 	public ReversiModel() {
 		initializeBoard();
+		totalMoves = 0;
 	}
 
 	private void initializeBoard(){
+
 		//Initialize board and set Black as the first playerToMove
 		board = new PlayerColour[BOARD_HEIGHT][BOARD_WIDTH];
 		nextPlayerToMove = PlayerColour.BLACK;
@@ -49,7 +52,13 @@ public class ReversiModel {
 	 * @throws IllegalMoveException if it is not the player's move, if the field
 	 * is already occupied or if the coordinates are out of range.
 	 */
-	public void makeMove(PlayerColour player, int x, int y) throws IllegalMoveException {		
+	public void makeMove(PlayerColour player, int x, int y) throws IllegalMoveException {
+
+		//Make sure that the first 4 moves are placed on fields that their coordinates only contain 3s and/or 4s
+		if(totalMoves < 4 && !(x == 3 || x == 4) && !(y == 3 || y == 4)){
+			throw new IllegalMoveException("This is an illegal move - First 4 pieces must be placed in the middle of the field");
+		}
+		totalMoves ++;
 	}
 	
 	/**

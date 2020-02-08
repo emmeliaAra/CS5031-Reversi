@@ -69,6 +69,8 @@ public class ReversiModel {
 
 		if(totalMoves < CONSTRAINED_MOVES){
 			handleFourInitialMoves(player,x,y);
+		}else {
+			int piecesCaptured = getCapturedPieces(player, x, y);
 		}
 	}
 
@@ -91,6 +93,73 @@ public class ReversiModel {
 		}
 	}
 
+	private int getCapturedPieces(PlayerColour playerColour, int x, int y){
+		/* Check for the surroundings field if it is inside the boundaries and that it does not have the same colour as the current player.
+		 *		if yes -> Make that piece hold the colour of the player
+		 *			   -> keep checking deeper towards that direction counting the number of captured pieces until a piece of the player is found.
+		 * 		otherwise return piecesCaptured = 0.
+		 */
+
+		int piecesCaptured = 0 ;
+
+		//Top-left field
+		while (x - 1 >= 0 && y - 1 >= 0 && playerColour != board[x-1][y-1]){
+			piecesCaptured++;
+			board[x-1][y-1] = playerColour;
+			board[x][y] = playerColour;
+		}
+
+		//Field above
+		while (y - 1 >= 0 && playerColour != board[x][y-1]){
+			piecesCaptured++;
+			board[x][y-1] = playerColour;
+			board[x][y] = playerColour;
+		}
+
+		//Top-right field
+		while (x + 1 < BOARD_WIDTH && y - 1 >=0 && playerColour != board[x+1][y-1]){
+			piecesCaptured++;
+			board[x+1][y-1] = playerColour;
+			board[x][y] = playerColour;
+		}
+
+		//Field on the left
+		while (x - 1 >= 1 && playerColour != board[x-1][y]){
+			piecesCaptured++;
+			board[x-1][y] = playerColour;
+			board[x][y] = playerColour;
+		}
+
+		//Field on the right
+		while (x + 1 < BOARD_WIDTH && playerColour != board[x+1][y]){
+			piecesCaptured++;
+			board[x+1][y] = playerColour;
+			board[x][y] = playerColour;
+		}
+
+		//Bottom-left
+		while (x - 1 >= 0 && y + 1 <= BOARD_HEIGHT && playerColour != board[x-1][y+1] ){
+			piecesCaptured++;
+			board[x-1][y+1] = playerColour;
+			board[x][y] = playerColour;
+		}
+
+		//Field below
+		while (y + 1 < BOARD_HEIGHT && playerColour != board[x][y+1]){
+			piecesCaptured++;
+			board[x][y+1] = playerColour;
+			board[x][y] = playerColour;
+		}
+
+		//bottom-right field.
+		while (x + 1 < BOARD_WIDTH && y + 1 < BOARD_HEIGHT && playerColour != board[x+1][y+1]){
+			piecesCaptured++;
+			board[x+1][y+1] = playerColour;
+			board[x][y] = playerColour;
+		}
+
+		return piecesCaptured;
+	}
 
 	/**
 	 * Return the number of black stones currently on the board.

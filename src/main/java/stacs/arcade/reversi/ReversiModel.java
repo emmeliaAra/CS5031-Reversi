@@ -1,7 +1,5 @@
 package stacs.arcade.reversi;
 
-import java.lang.ref.PhantomReference;
-
 /**
  * Implementation of the model for the Othello game.
  * 
@@ -18,7 +16,7 @@ public class ReversiModel {
 	private static final int CONSTRAINED_MOVES = 4;
 	private static final int BOUNDARY_A = 3;
 	private static final int BOUNDARY_B = 4;
-	private int totalMoves;
+	private int totalMoves, piecesCaptured;
 
 	private String illegalMoveMessage = "This is an illegal move - ";
 
@@ -70,7 +68,7 @@ public class ReversiModel {
 		if(totalMoves < CONSTRAINED_MOVES){
 			handleFourInitialMoves(player,x,y);
 		}else {
-			int piecesCaptured = getCapturedPieces(player, x, y);
+			piecesCaptured = getNumOfCapturedPieces(player, x, y);
 		}
 	}
 
@@ -93,72 +91,55 @@ public class ReversiModel {
 		}
 	}
 
-	private int getCapturedPieces(PlayerColour playerColour, int x, int y){
+	private int getNumOfCapturedPieces(PlayerColour playerColour, int x, int y){
 		/* Check for the surroundings field if it is inside the boundaries and that it does not have the same colour as the current player.
 		 *		if yes -> Make that piece hold the colour of the player
 		 *			   -> keep checking deeper towards that direction counting the number of captured pieces until a piece of the player is found.
 		 * 		otherwise return piecesCaptured = 0.
 		 */
 
-		int piecesCaptured = 0 ;
+		piecesCaptured = 0 ;
 
 		//Top-left field
-		while (x - 1 >= 0 && y - 1 >= 0 && playerColour != board[x-1][y-1]){
-			piecesCaptured++;
-			board[x-1][y-1] = playerColour;
-			board[x][y] = playerColour;
-		}
+		while (x - 1 >= 0 && y - 1 >= 0 && playerColour != board[x-1][y-1])
+			capturePiece(playerColour,x,y,x-1,y-1);
 
 		//Field above
-		while (y - 1 >= 0 && playerColour != board[x][y-1]){
-			piecesCaptured++;
-			board[x][y-1] = playerColour;
-			board[x][y] = playerColour;
-		}
+		while (y - 1 >= 0 && playerColour != board[x][y-1])
+			capturePiece(playerColour,x,y,x,y-1);
 
 		//Top-right field
-		while (x + 1 < BOARD_WIDTH && y - 1 >=0 && playerColour != board[x+1][y-1]){
-			piecesCaptured++;
-			board[x+1][y-1] = playerColour;
-			board[x][y] = playerColour;
-		}
+		while (x + 1 < BOARD_WIDTH && y - 1 >=0 && playerColour != board[x+1][y-1])
+			capturePiece(playerColour,x,y,x+1,y-1);
+
 
 		//Field on the left
-		while (x - 1 >= 1 && playerColour != board[x-1][y]){
-			piecesCaptured++;
-			board[x-1][y] = playerColour;
-			board[x][y] = playerColour;
-		}
+		while (x - 1 >= 1 && playerColour != board[x-1][y])
+			capturePiece(playerColour,x,y,x-1,y);
 
 		//Field on the right
-		while (x + 1 < BOARD_WIDTH && playerColour != board[x+1][y]){
-			piecesCaptured++;
-			board[x+1][y] = playerColour;
-			board[x][y] = playerColour;
-		}
+		while (x + 1 < BOARD_WIDTH && playerColour != board[x+1][y])
+			capturePiece(playerColour,x,y,x+1,y);
 
 		//Bottom-left
-		while (x - 1 >= 0 && y + 1 <= BOARD_HEIGHT && playerColour != board[x-1][y+1] ){
-			piecesCaptured++;
-			board[x-1][y+1] = playerColour;
-			board[x][y] = playerColour;
-		}
+		while (x - 1 >= 0 && y + 1 <= BOARD_HEIGHT && playerColour != board[x-1][y+1] )
+			capturePiece(playerColour,x,y,x-1,y+1);
 
 		//Field below
-		while (y + 1 < BOARD_HEIGHT && playerColour != board[x][y+1]){
-			piecesCaptured++;
-			board[x][y+1] = playerColour;
-			board[x][y] = playerColour;
-		}
+		while (y + 1 < BOARD_HEIGHT && playerColour != board[x][y+1])
+			capturePiece(playerColour,x,y,x,y+1);
 
 		//bottom-right field.
-		while (x + 1 < BOARD_WIDTH && y + 1 < BOARD_HEIGHT && playerColour != board[x+1][y+1]){
-			piecesCaptured++;
-			board[x+1][y+1] = playerColour;
-			board[x][y] = playerColour;
-		}
+		while (x + 1 < BOARD_WIDTH && y + 1 < BOARD_HEIGHT && playerColour != board[x+1][y+1])
+			capturePiece(playerColour,x,y,x+1,y+1);
 
 		return piecesCaptured;
+	}
+
+	private void capturePiece(PlayerColour playerColour, int xPlayer, int yPlayer, int xCaptured, int yCaptured){
+		board[xPlayer][yPlayer] = playerColour;
+		board[xCaptured][yCaptured] = playerColour;
+		piecesCaptured++;
 	}
 
 	/**

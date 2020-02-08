@@ -1,5 +1,7 @@
 package stacs.arcade.reversi;
 
+import java.lang.ref.PhantomReference;
+
 /**
  * Implementation of the model for the Othello game.
  * 
@@ -17,6 +19,8 @@ public class ReversiModel {
 	private static final int BOUNDARY_A = 3;
 	private static final int BOUNDARY_B = 4;
 	private int totalMoves;
+
+	private String illegalMoveMessage = "This is an illegal move - ";
 
     /**
      * Needs a simple constructor, required for construction by the
@@ -57,23 +61,36 @@ public class ReversiModel {
 	 */
 	public void makeMove(PlayerColour player, int x, int y) throws IllegalMoveException {
 
-		/* Check for moves outside the boundaries
-		 * 		-> If field does not exist, throw illegalMoveException.
-		 * 		-> Otherwise check if this is one of the first moves and act appropriately.
+		/* Check for moves outside the boundaries - If field does not exist, throw illegalMoveException.
+		 * Checks if these is one of the 4 initial moves. If yes calls method to handle appropriately.
 		 */
 
-		if(x >= 0 && x <= BOARD_WIDTH && y >= 0 && y <= BOARD_HEIGHT){
+		checkBoundaries(x,y);
 
-			//Make sure that the first 4 moves are placed on fields that their coordinates only contain 3s and/or 4s
-			if(totalMoves < CONSTRAINED_MOVES && !(x == BOUNDARY_A || x == BOUNDARY_B) && !(y == BOUNDARY_A || y == BOUNDARY_B)){
-				throw new IllegalMoveException("This is an illegal move - First 4 pieces must be placed in the middle of the field");
-			}
-			totalMoves ++;
-		}else {
-			throw new IllegalMoveException("This is an illegal move - Field does not exists");
+		if(totalMoves < CONSTRAINED_MOVES){
+			handleFourInitialMoves(player,x,y);
 		}
-
 	}
+
+	private void checkBoundaries(int x, int y) throws IllegalMoveException{
+		if(x < 0 || x >= BOARD_WIDTH || y < 0 || y >= BOARD_HEIGHT) {
+			throw new IllegalMoveException(illegalMoveMessage + "Field does not exists");
+		}
+	}
+
+	private void handleFourInitialMoves(PlayerColour playerColour, int x, int y) throws IllegalMoveException{
+		/* Make sure that the first 4 moves are placed on fields that their coordinates only contain 3s and/or 4s and that the field is available
+		 * If field is valid and not occupied. ->place, otherwise throw exception.
+		 */
+
+		if( (x == BOUNDARY_A || x == BOUNDARY_B) && (y == BOUNDARY_A || y == BOUNDARY_B) && getAt(x,y) == null){
+			board[x][y] = playerColour;
+			totalMoves ++;
+		} else {
+			throw new IllegalMoveException(illegalMoveMessage + "This piece is occupied");
+		}
+	}
+
 
 	/**
 	 * Return the number of black stones currently on the board.

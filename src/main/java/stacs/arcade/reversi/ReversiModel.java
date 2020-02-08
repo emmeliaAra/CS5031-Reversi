@@ -69,6 +69,8 @@ public class ReversiModel {
 			handleFourInitialMoves(player,x,y);
 		}else {
 			piecesCaptured = getNumOfCapturedPieces(player, x, y);
+			if(piecesCaptured == 0 )
+				throw new IllegalMoveException(illegalMoveMessage + "Does not result to a captured piece of the opponent");
 		}
 	}
 
@@ -101,36 +103,36 @@ public class ReversiModel {
 		piecesCaptured = 0 ;
 
 		//Top-left field
-		while (x - 1 >= 0 && y - 1 >= 0 && playerColour != board[x-1][y-1])
+		while (x - 1 >= 0 && y - 1 >= 0 && playerColour != board[x-1][y-1] && null != board[x-1][y-1])
 			capturePiece(playerColour,x,y,x-1,y-1);
 
 		//Field above
-		while (y - 1 >= 0 && playerColour != board[x][y-1])
+		while (y - 1 >= 0 && playerColour != board[x][y-1] && null !=  board[x][y-1])
 			capturePiece(playerColour,x,y,x,y-1);
 
 		//Top-right field
-		while (x + 1 < BOARD_WIDTH && y - 1 >=0 && playerColour != board[x+1][y-1])
+		while (x + 1 < BOARD_WIDTH && y - 1 >=0 && playerColour != board[x+1][y-1]  && null != board[x+1][y-1])
 			capturePiece(playerColour,x,y,x+1,y-1);
 
 
 		//Field on the left
-		while (x - 1 >= 1 && playerColour != board[x-1][y])
+		while (x - 1 >= 1 && playerColour != board[x-1][y] && null != board[x-1][y])
 			capturePiece(playerColour,x,y,x-1,y);
 
 		//Field on the right
-		while (x + 1 < BOARD_WIDTH && playerColour != board[x+1][y])
+		while (x + 1 < BOARD_WIDTH && playerColour != board[x+1][y] && null != board[x+1][y])
 			capturePiece(playerColour,x,y,x+1,y);
 
 		//Bottom-left
-		while (x - 1 >= 0 && y + 1 <= BOARD_HEIGHT && playerColour != board[x-1][y+1] )
+		while (x - 1 >= 0 && y + 1 <= BOARD_HEIGHT && playerColour != board[x-1][y+1] && null != board[x-1][y+1])
 			capturePiece(playerColour,x,y,x-1,y+1);
 
 		//Field below
-		while (y + 1 < BOARD_HEIGHT && playerColour != board[x][y+1])
+		while (y + 1 < BOARD_HEIGHT && playerColour != board[x][y+1] && null != board[x][y+1])
 			capturePiece(playerColour,x,y,x,y+1);
 
 		//bottom-right field.
-		while (x + 1 < BOARD_WIDTH && y + 1 < BOARD_HEIGHT && playerColour != board[x+1][y+1])
+		while (x + 1 < BOARD_WIDTH && y + 1 < BOARD_HEIGHT && playerColour != board[x+1][y+1] && null != board[x+1][y+1])
 			capturePiece(playerColour,x,y,x+1,y+1);
 
 		return piecesCaptured;

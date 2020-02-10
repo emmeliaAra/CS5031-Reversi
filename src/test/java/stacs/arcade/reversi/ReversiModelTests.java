@@ -112,8 +112,8 @@ public class ReversiModelTests {
 		this.model.makeMove(WHITE, 3, 4);
 		this.model.makeMove(BLACK, 4, 3);
 		this.model.makeMove(WHITE, 4, 4);
-		
-		this.model.makeMove(BLACK, 4, 5);			
+
+		this.model.makeMove(BLACK, 4, 5);
 		assertEquals(this.model.getAt(4, 5), BLACK);
 		assertEquals(this.model.getAt(4, 4), BLACK);
 				

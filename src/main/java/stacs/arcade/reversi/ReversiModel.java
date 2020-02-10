@@ -9,7 +9,7 @@ public class ReversiModel {
 
 	public enum PlayerColour {BLACK, WHITE}
 	private PlayerColour[][] board = null;
-	private PlayerColour nextPlayerToMove;
+	private PlayerColour currentPlayer;
 
 	private static final int BOARD_WIDTH = 8;
 	private static final int BOARD_HEIGHT = 8;
@@ -35,7 +35,7 @@ public class ReversiModel {
 
 		//Initialize board and set Black as the first playerToMove
 		board = new PlayerColour[BOARD_HEIGHT][BOARD_WIDTH];
-		nextPlayerToMove = PlayerColour.BLACK;
+		currentPlayer = PlayerColour.BLACK;
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class ReversiModel {
 	 * Returns the player who is to move next.
 	 */
 	public PlayerColour nextToMove() {		
-		return null;
+		return currentPlayer;
 	}
 	
 	/**
@@ -61,9 +61,11 @@ public class ReversiModel {
 	 */
 	public void makeMove(PlayerColour player, int x, int y) throws IllegalMoveException {
 
-		/* Check for moves outside the boundaries - If field does not exist, throw illegalMoveException.
+		/* Checks that then right player is playing - If not exception is thrown..
+		 * Check for moves outside the boundaries - If field does not exist, throw illegalMoveException.
 		 * Checks if these is one of the 4 initial moves. If yes calls method to handle appropriately.
 		 */
+		checkValidPlayer(player);
 		checkBoundaries(x,y);
 
 		if(totalMoves < CONSTRAINED_MOVES){
@@ -74,6 +76,12 @@ public class ReversiModel {
 				throw new IllegalMoveException(illegalMoveMessage + "Does not result to a captured piece of the opponent");
 			updateStones(player);
 		}
+		switchPlayerTurn();
+	}
+
+	private void checkValidPlayer(PlayerColour playerColour) throws IllegalMoveException{
+		if(playerColour != currentPlayer)
+			throw new IllegalMoveException(illegalMoveMessage + "This is not your turn, you cannot perform that move now.");
 	}
 
 	private void checkBoundaries(int x, int y) throws IllegalMoveException{
@@ -164,6 +172,12 @@ public class ReversiModel {
 			if(blackStones > 0 )
 				blackStones -= piecesCaptured;
 		}
+	}
+
+	private void switchPlayerTurn(){
+		if(currentPlayer == PlayerColour.BLACK)
+			currentPlayer = PlayerColour.WHITE;
+		else currentPlayer = PlayerColour.BLACK;
 	}
 
 	/**

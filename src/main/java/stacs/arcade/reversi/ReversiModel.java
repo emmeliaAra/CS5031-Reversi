@@ -16,7 +16,7 @@ public class ReversiModel {
 	private static final int CONSTRAINED_MOVES = 4;
 	private static final int BOUNDARY_A = 3;
 	private static final int BOUNDARY_B = 4;
-	private int totalMoves, piecesCaptured;
+	private int totalMoves, piecesCaptured,blackStones,whiteStones;
 
 	private String illegalMoveMessage = "This is an illegal move - ";
 
@@ -27,6 +27,8 @@ public class ReversiModel {
 	public ReversiModel() {
 		initializeBoard();
 		totalMoves = 0;
+		blackStones = 0;
+		whiteStones = 0;
 	}
 
 	private void initializeBoard(){
@@ -88,8 +90,10 @@ public class ReversiModel {
 		if( (x == BOUNDARY_A || x == BOUNDARY_B) && (y == BOUNDARY_A || y == BOUNDARY_B) && getAt(x,y) == null){
 			board[x][y] = playerColour;
 			totalMoves ++;
-		} else {
+		} else if (getAt(x,y) != null){
 			throw new IllegalMoveException(illegalMoveMessage + "This piece is occupied");
+		} else {
+			throw new IllegalMoveException(illegalMoveMessage + "This is an illegal move. The 4 initial pieces must be placed in the center");
 		}
 	}
 

@@ -117,43 +117,43 @@ public class ReversiModel {
 
 		//Top-left field
 		while (x - 1 >= 0 && y - 1 >= 0 && nextToMove() != board[x-1][y-1] && null != board[x-1][y-1])
-			capturePiece(nextToMove(),x,y,x-1,y-1);
+			capturePiece(x,y,x-1,y-1);
 
 		//Field above
 		while (y - 1 >= 0 && nextToMove() != board[x][y-1] && null !=  board[x][y-1])
-			capturePiece(nextToMove(),x,y,x,y-1);
+			capturePiece(x,y,x,y-1);
 
 		//Top-right field
 		while (x + 1 < BOARD_WIDTH && y - 1 >=0 && nextToMove() != board[x+1][y-1]  && null != board[x+1][y-1])
-			capturePiece(nextToMove(),x,y,x+1,y-1);
+			capturePiece(x,y,x+1,y-1);
 
 
 		//Field on the left
 		while (x - 1 >= 1 && nextToMove() != board[x-1][y] && null != board[x-1][y])
-			capturePiece(nextToMove(),x,y,x-1,y);
+			capturePiece(x,y,x-1,y);
 
 		//Field on the right
 		while (x + 1 < BOARD_WIDTH && nextToMove() != board[x+1][y] && null != board[x+1][y])
-			capturePiece(nextToMove(),x,y,x+1,y);
+			capturePiece(x,y,x+1,y);
 
 		//Bottom-left
 		while (x - 1 >= 0 && y + 1 <= BOARD_HEIGHT && nextToMove() != board[x-1][y+1] && null != board[x-1][y+1])
-			capturePiece(nextToMove(),x,y,x-1,y+1);
+			capturePiece(x,y,x-1,y+1);
 
 		//Field below
 		while (y + 1 < BOARD_HEIGHT && nextToMove() != board[x][y+1] && null != board[x][y+1])
-			capturePiece(nextToMove(),x,y,x,y+1);
+			capturePiece(x,y,x,y+1);
 
 		//bottom-right field.
 		while (x + 1 < BOARD_WIDTH && y + 1 < BOARD_HEIGHT && nextToMove() != board[x+1][y+1] && null != board[x+1][y+1])
-			capturePiece(nextToMove(),x,y,x+1,y+1);
+			capturePiece(x,y,x+1,y+1);
 
 		return piecesCaptured;
 	}
 
-	private void capturePiece(PlayerColour playerColour, int xPlayer, int yPlayer, int xCaptured, int yCaptured){
-		board[xPlayer][yPlayer] = playerColour;
-		board[xCaptured][yCaptured] = playerColour;
+	private void capturePiece(int xPlayer, int yPlayer, int xCaptured, int yCaptured){
+		board[xPlayer][yPlayer] = nextToMove();
+		board[xCaptured][yCaptured] = nextToMove();
 		piecesCaptured++;
 	}
 	

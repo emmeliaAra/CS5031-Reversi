@@ -69,7 +69,7 @@ public class ReversiModel {
 		checkBoundaries(x,y);
 
 		if(totalMoves < CONSTRAINED_MOVES){
-			handleFourInitialMoves(player,x,y);
+			handleFourInitialMoves(x,y);
 		}else {
 			piecesCaptured = getNumOfCapturedPieces(player, x, y);
 			if(piecesCaptured == 0 )
@@ -80,7 +80,7 @@ public class ReversiModel {
 	}
 
 	private void checkValidPlayer(PlayerColour playerColour) throws IllegalMoveException{
-		if(playerColour != currentPlayer)
+		if(playerColour != nextToMove())
 			throw new IllegalMoveException(illegalMoveMessage + "This is not your turn, you cannot perform that move now.");
 	}
 
@@ -90,15 +90,15 @@ public class ReversiModel {
 		}
 	}
 
-	private void handleFourInitialMoves(PlayerColour playerColour, int x, int y) throws IllegalMoveException{
+	private void handleFourInitialMoves(int x, int y) throws IllegalMoveException{
 		/* Make sure that the first 4 moves are placed on fields that their coordinates only contain 3s and/or 4s and that the field is available
 		 * If field is valid and not occupied. ->place, otherwise throw exception.
 		 */
 
 		if( (x == BOUNDARY_A || x == BOUNDARY_B) && (y == BOUNDARY_A || y == BOUNDARY_B) && getAt(x,y) == null){
-			board[x][y] = playerColour;
+			board[x][y] = nextToMove();
 			totalMoves ++;
-			updateStones(playerColour);
+			updateStones(nextToMove());
 		} else if (getAt(x,y) != null){
 			throw new IllegalMoveException(illegalMoveMessage + "This piece is occupied");
 		} else {

@@ -2,7 +2,7 @@ package stacs.arcade.reversi;
 
 /**
  * Implementation of the model for the Othello game.
- * 
+ *
  * @author 190023753
  */
 public class ReversiModel {
@@ -20,10 +20,10 @@ public class ReversiModel {
 
 	private String illegalMoveMessage = "This is an illegal move - ";
 
-    /**
-     * Needs a simple constructor, required for construction by the
-     * class that contains the tests. 
-     */
+	/**
+	 * Needs a simple constructor, required for construction by the
+	 * class that contains the tests.
+	 */
 	public ReversiModel() {
 		initializeBoard();
 		totalMoves = 0;
@@ -46,14 +46,14 @@ public class ReversiModel {
 			return board[x][y];
 		return null;
 	}
-	
+
 	/**
 	 * Returns the player who is to move next.
 	 */
-	public PlayerColour nextToMove() {		
+	public PlayerColour nextToMove() {
 		return currentPlayer;
 	}
-	
+
 	/**
 	 * Make a move by placing a piece of the given colour on the given field.
 	 * @throws IllegalMoveException if it is not the player's move, if the field
@@ -114,13 +114,25 @@ public class ReversiModel {
 		 * 		otherwise return piecesCaptured = 0.
 		 */
 
-		int tempCounter = 0;
+		piecesCaptured = 0 ;
+		checkTopLeftField(x,y);
+		checkTopField(x,y);
+		checkTopRightField(x,y);
+		checkLeftField(x,y);
+		checkRightField(x,y);
+		checkBottomField(x,y);
+		checkBottomLeftField(x,y);
+		checkBottomField(x,y);
+		checkBottomRightField(x,y);
+
+		return piecesCaptured;
+	}
+
+	private void checkTopLeftField(int x, int y){
 		int currentPlayerX = x;
 		int currentPlayerY = y;
+		int tempCounter = 0;
 
-		piecesCaptured = 0 ;
-
-		//Top-left field
 		while (x - 1 >= 0 && y - 1 >= 0 && nextToMove() != board[x-1][y-1] &&  board[x-1][y-1] != null) {
 			tempCounter ++;
 			x --;
@@ -132,78 +144,81 @@ public class ReversiModel {
 				capturePiece(currentPlayerX - i,currentPlayerY - i );
 			}
 		}
+	}
 
-		x = currentPlayerX;
-		y = currentPlayerY;
-		tempCounter = 0;
+	private void checkTopField(int x, int y){
+		int  currentPlayerY = y;
+		int tempCounter = 0;
 
-		//Field above
 		while (y - 1 >= 0 && nextToMove() != board[x][y-1] &&  board[x][y-1]!= null) {
 			tempCounter++;
 			y --;
 		}
 
-		if(y -1 >= 0  && board[currentPlayerX][y-1] == nextToMove()){
+		if(y -1 >= 0  && board[x][y-1] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
-				capturePiece(currentPlayerX,currentPlayerY - i);
+				capturePiece(x,currentPlayerY - i);
 			}
 		}
+	}
 
-		x = currentPlayerX;
-		y = currentPlayerY;
-		tempCounter = 0;
 
-		//Top-right field
-		while (x + 1 < BOARD_WIDTH && y - 1 >=0 && nextToMove() != board[x+1][y-1] && board[x+1][y-1]!= null) {
-			tempCounter ++;
+	private void checkTopRightField(int x, int y) {
+		int tempCounter = 0;
+		int currentPlayerX = x;
+		int currentPlayerY = y;
+
+		while (x + 1 < BOARD_WIDTH && y - 1 >= 0 && nextToMove() != board[x + 1][y - 1] && board[x + 1][y - 1] != null) {
+			tempCounter++;
 			x++;
 			y--;
 		}
 
-		if(x + 1 < BOARD_WIDTH && y - 1 >= 0 && board[x+1][y-1] == nextToMove()){
+		if (x + 1 < BOARD_WIDTH && y - 1 >= 0 && board[x + 1][y - 1] == nextToMove()) {
 			for (int i = 1; i <= tempCounter; i++) {
-				capturePiece(currentPlayerX+i,currentPlayerY-i);
+				capturePiece(currentPlayerX + i, currentPlayerY - i);
 			}
 		}
+	}
 
-		x = currentPlayerX;
-		y = currentPlayerY;
-		tempCounter = 0;
+	private void checkLeftField(int x,int y){
 
-		//Field on the left
+		int tempCounter = 0;
+		int currentPlayerX = x;
+
 		while (x - 1 >= 1 && nextToMove() != board[x-1][y] && board[x-1][y]!= null) {
 			tempCounter++;
 			x--;
 		}
 
-
-		if(x - 1 >=0 && board[x-1][currentPlayerY] == nextToMove()){
+		if(x - 1 >=0 && board[x-1][y] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
-				capturePiece(currentPlayerX - i,currentPlayerY);
+				capturePiece(currentPlayerX - i,y);
 			}
 		}
+	}
 
-		x = currentPlayerX;
-		y = currentPlayerY;
-		tempCounter = 0;
+	private void checkRightField(int x, int y){
+		int currentPlayerX = x;
+		int tempCounter = 0;
 
-		//Field on the right
 		while (x + 1 < BOARD_WIDTH && nextToMove() != board[x+1][y] &&  board[x+1][y] != null) {
 			tempCounter++;
 			x++;
 		}
 
-		if(x + 1 < BOARD_WIDTH && board[x+1][currentPlayerY] == nextToMove()){
+		if(x + 1 < BOARD_WIDTH && board[x+1][y] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
-				capturePiece(currentPlayerX + i,currentPlayerY);
+				capturePiece(currentPlayerX + i,y);
 			}
 		}
+	}
 
-		x = currentPlayerX;
-		y = currentPlayerY;
-		tempCounter = 0;
+	private void checkBottomLeftField(int x, int y){
+		int tempCounter = 0;
+		int currentPlayerX = x;
+		int currentPlayerY = y;
 
-		//Bottom-left
 		while (x - 1 >= 0 && y + 1 <= BOARD_HEIGHT && nextToMove() != board[x-1][y+1] && board[x-1][y+1] != null) {
 			tempCounter++;
 			x--;
@@ -215,31 +230,33 @@ public class ReversiModel {
 				capturePiece(currentPlayerX - i,currentPlayerY + i );
 			}
 		}
-		x = currentPlayerX;
-		y = currentPlayerY;
-		tempCounter = 0;
+	}
 
-		//Field below
+	private void checkBottomField(int x, int y){
+		int tempCounter = 0;
+		int currentPlayerY = y;
+		
 		while (y + 1 < BOARD_HEIGHT && nextToMove() != board[x][y+1] && board[x][y+1] != null) {
-			//	capturePiece(x, y, x, y + 1);
 			tempCounter++;
 			y++;
 		}
 
-		if(y + 1 < BOARD_HEIGHT && board[currentPlayerX][y+1] == nextToMove()){
+		if(y + 1 < BOARD_HEIGHT && board[x][y+1] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
-				capturePiece(currentPlayerX,currentPlayerY + i);
+				capturePiece(x,currentPlayerY + i);
 			}
 		}
-		x = currentPlayerX;
-		y = currentPlayerY;
-		tempCounter = 0;
+	}
 
-		//bottom-right field.
+	private void checkBottomRightField(int x, int y){
+		int tempCounter = 0;
+		int currentPlayerX = x;
+		int currentPlayerY = y;
+
 		while (x + 1 < BOARD_WIDTH && y + 1 < BOARD_HEIGHT && nextToMove() != board[x+1][y+1] && board[x+1][y+1] != null) {
+			tempCounter++;
 			x++;
 			y++;
-			tempCounter++;
 		}
 
 		if(x + 1 <BOARD_WIDTH && y + 1 <BOARD_HEIGHT && board[x+1][y+1] == nextToMove()){
@@ -247,8 +264,6 @@ public class ReversiModel {
 				capturePiece(currentPlayerX + i,currentPlayerY + i);
 			}
 		}
-
-		return piecesCaptured;
 	}
 
 	private void capturePiece(int xCaptured, int yCaptured){

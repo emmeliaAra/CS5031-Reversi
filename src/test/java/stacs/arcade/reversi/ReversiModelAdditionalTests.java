@@ -103,7 +103,17 @@ public class ReversiModelAdditionalTests {
         this.model.makeMove(BLACK,5,5); //7-2
         assertEquals(7,this.model.getNoBlackStones());
         assertEquals(2,this.model.getNoWhiteStones());
+    }
 
+    @Test
+    public void mustRejectCaptureWithEmptyFieldInBetween() throws IllegalMoveException {
+
+        this.model.makeMove(BLACK,4,3);
+        this.model.makeMove(WHITE,3,3);
+        this.model.makeMove(BLACK,3,4);
+        this.model.makeMove(WHITE,4,4);
+
+        assertThrows(IllegalMoveException.class,() -> this.model.makeMove(BLACK,4,6));
 
     }
 }

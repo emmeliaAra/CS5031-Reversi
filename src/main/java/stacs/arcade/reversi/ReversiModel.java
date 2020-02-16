@@ -109,9 +109,8 @@ public class ReversiModel {
 
 	private int getNumOfCapturedPieces(int x, int y){
 		/* Check for the surroundings field if it is inside the boundaries and that it does not have the same colour as the current player.
-		 *		if yes -> Make that piece hold the colour of the player
-		 *			   -> keep checking deeper towards that direction counting the number of captured pieces until a piece of the player is found.
-		 * 		otherwise return piecesCaptured = 0.
+		 *		if yes ->  keep checking deeper towards that direction counting the number of captured pieces until a piece of the player is found.
+		 * 		otherwise -> return piecesCaptured = 0.
 		 */
 
 		piecesCaptured = 0 ;
@@ -224,7 +223,7 @@ public class ReversiModel {
 			x--;
 			y++;
 		}
-		
+
 		if(x - 1 >=0 && y + 1 < BOARD_HEIGHT && board[x-1][y+1] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
 				capturePiece(currentPlayerX - i,currentPlayerY + i );

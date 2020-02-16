@@ -224,7 +224,7 @@ public class ReversiModel {
 			x--;
 			y++;
 		}
-
+		
 		if(x - 1 >=0 && y + 1 < BOARD_HEIGHT && board[x-1][y+1] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
 				capturePiece(currentPlayerX - i,currentPlayerY + i );
@@ -235,7 +235,7 @@ public class ReversiModel {
 	private void checkBottomField(int x, int y){
 		int tempCounter = 0;
 		int currentPlayerY = y;
-		
+
 		while (y + 1 < BOARD_HEIGHT && nextToMove() != board[x][y+1] && board[x][y+1] != null) {
 			tempCounter++;
 			y++;

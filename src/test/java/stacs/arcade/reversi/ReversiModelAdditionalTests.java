@@ -100,7 +100,9 @@ public class ReversiModelAdditionalTests {
         this.model.makeMove(BLACK,1,2); //5-2
 
         this.model.makeMove(WHITE,3,5); //4-4
-        this.model.makeMove(WHITE,5,5); //7-2
+        this.model.makeMove(BLACK,5,5); //7-2
+        assertEquals(7,this.model.getNoBlackStones());
+        assertEquals(2,this.model.getNoWhiteStones());
 
 
     }

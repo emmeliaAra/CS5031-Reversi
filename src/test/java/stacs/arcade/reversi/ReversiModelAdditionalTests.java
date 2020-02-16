@@ -53,4 +53,10 @@ public class ReversiModelAdditionalTests {
         assertThrows(IllegalMoveException.class,() -> this.model.makeMove(BLACK,3,3));
     }
 
+    @Test
+    public void mustEnforceTakingTurnAfterMakeMove() throws IllegalMoveException {
+        this.model.makeMove(BLACK,3,4);
+        assertEquals(WHITE,this.model.nextToMove());
+    }
+
 }

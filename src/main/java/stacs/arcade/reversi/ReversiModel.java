@@ -74,8 +74,9 @@ public class ReversiModel {
 			piecesCaptured = getNumOfCapturedPieces(x, y);
 			if(piecesCaptured == 0 )
 				throw new IllegalMoveException(illegalMoveMessage + "Does not result to a captured piece of the opponent");
-			updateStones();
 		}
+		totalMoves++;
+		updateStones();
 		switchPlayerTurn();
 	}
 
@@ -97,8 +98,6 @@ public class ReversiModel {
 
 		if( (x == BOUNDARY_A || x == BOUNDARY_B) && (y == BOUNDARY_A || y == BOUNDARY_B) && getAt(x,y) == null){
 			board[x][y] = nextToMove();
-			totalMoves ++;
-			updateStones();
 		} else if (getAt(x,y) != null){
 			throw new IllegalMoveException(illegalMoveMessage + "This piece is occupied");
 		} else {
@@ -158,18 +157,17 @@ public class ReversiModel {
 	}
 	
 	private void updateStones(){
-
 		/* Find which player is the one who made a capturing move
 		 * Add the capturing pieces +1 (for the piece that he added to make the capturing move)
 		 * Deduct the number of capturing pieces from the opponent if pieces>0. - If opponents pieces are 0 -> the player is making one of the 4st initial moves.
 		 */
 		if(nextToMove() == PlayerColour.BLACK){
 			blackStones += piecesCaptured + 1;
-			if(whiteStones > 0)
+		//	if(whiteStones > 0)
 				whiteStones -= piecesCaptured;
 		}else {
 			whiteStones += piecesCaptured + 1;
-			if(blackStones > 0 )
+		//	if(blackStones > 0 )
 				blackStones -= piecesCaptured;
 		}
 	}

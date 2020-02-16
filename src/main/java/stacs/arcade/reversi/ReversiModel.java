@@ -74,6 +74,8 @@ public class ReversiModel {
 			piecesCaptured = getNumOfCapturedPieces(x, y);
 			if(piecesCaptured == 0 )
 				throw new IllegalMoveException(illegalMoveMessage + "Does not result to a captured piece of the opponent");
+			board[x][y] = nextToMove();
+
 		}
 		totalMoves++;
 		updateStones();
@@ -112,46 +114,144 @@ public class ReversiModel {
 		 * 		otherwise return piecesCaptured = 0.
 		 */
 
+		int tempCounter = 0;
+		int currentPlayerX = x;
+		int currentPlayerY = y;
+
 		piecesCaptured = 0 ;
 
 		//Top-left field
-		while (x - 1 >= 0 && y - 1 >= 0 && nextToMove() != board[x-1][y-1] && null != board[x-1][y-1])
-			capturePiece(x, y, x - 1, y - 1);
+		while (x - 1 >= 0 && y - 1 >= 0 && nextToMove() != board[x-1][y-1] &&  board[x-1][y-1] != null) {
+			tempCounter ++;
+			x --;
+			y--;
+		}
+
+		if(x - 1 >= 0 && y - 1 >= 0 && board[x-1][y-1] == nextToMove()){
+			for (int i = 1; i <= tempCounter; i++) {
+				capturePiece(currentPlayerX - i,currentPlayerY - i );
+			}
+		}
+
+		x = currentPlayerX;
+		y = currentPlayerY;
+		tempCounter = 0;
 
 		//Field above
-		while (y - 1 >= 0 && nextToMove() != board[x][y-1] && null !=  board[x][y-1])
-			capturePiece(x, y, x, y - 1);
+		while (y - 1 >= 0 && nextToMove() != board[x][y-1] &&  board[x][y-1]!= null) {
+			tempCounter++;
+			y --;
+		}
+
+		if(y -1 >= 0  && board[currentPlayerX][y-1] == nextToMove()){
+			for (int i = 1; i <= tempCounter; i++) {
+				capturePiece(currentPlayerX,currentPlayerY - i);
+			}
+		}
+
+		x = currentPlayerX;
+		y = currentPlayerY;
+		tempCounter = 0;
 
 		//Top-right field
-		while (x + 1 < BOARD_WIDTH && y - 1 >=0 && nextToMove() != board[x+1][y-1]  && null != board[x+1][y-1])
-			capturePiece(x,y,x+1,y-1);
+		while (x + 1 < BOARD_WIDTH && y - 1 >=0 && nextToMove() != board[x+1][y-1] && board[x+1][y-1]!= null) {
+			tempCounter ++;
+			x++;
+			y--;
+		}
+
+		if(x + 1 < BOARD_WIDTH && y - 1 >= 0 && board[x+1][y-1] == nextToMove()){
+			for (int i = 1; i <= tempCounter; i++) {
+				capturePiece(currentPlayerX+i,currentPlayerY-i);
+			}
+		}
+
+		x = currentPlayerX;
+		y = currentPlayerY;
+		tempCounter = 0;
 
 		//Field on the left
-		while (x - 1 >= 1 && nextToMove() != board[x-1][y] && null != board[x-1][y])
-			capturePiece(x,y,x-1,y);
+		while (x - 1 >= 1 && nextToMove() != board[x-1][y] && board[x-1][y]!= null) {
+			tempCounter++;
+			x--;
+		}
+
+
+		if(x - 1 >=0 && board[x-1][currentPlayerY] == nextToMove()){
+			for (int i = 1; i <= tempCounter; i++) {
+				capturePiece(currentPlayerX - i,currentPlayerY);
+			}
+		}
+
+		x = currentPlayerX;
+		y = currentPlayerY;
+		tempCounter = 0;
 
 		//Field on the right
-		while (x + 1 < BOARD_WIDTH && nextToMove() != board[x+1][y] && null != board[x+1][y])
-			capturePiece(x,y,x+1,y);
+		while (x + 1 < BOARD_WIDTH && nextToMove() != board[x+1][y] &&  board[x+1][y] != null) {
+			tempCounter++;
+			x++;
+		}
+
+		if(x + 1 < BOARD_WIDTH && board[x+1][currentPlayerY] == nextToMove()){
+			for (int i = 1; i <= tempCounter; i++) {
+				capturePiece(currentPlayerX + i,currentPlayerY);
+			}
+		}
+
+		x = currentPlayerX;
+		y = currentPlayerY;
+		tempCounter = 0;
 
 		//Bottom-left
-		while (x - 1 >= 0 && y + 1 <= BOARD_HEIGHT && nextToMove() != board[x-1][y+1] && null != board[x-1][y+1])
-			capturePiece(x,y,x-1,y+1);
+		while (x - 1 >= 0 && y + 1 <= BOARD_HEIGHT && nextToMove() != board[x-1][y+1] && board[x-1][y+1] != null) {
+			tempCounter++;
+			x--;
+			y++;
+		}
+
+		if(x - 1 >=0 && y + 1 < BOARD_HEIGHT && board[x-1][y+1] == nextToMove()){
+			for (int i = 1; i <= tempCounter; i++) {
+				capturePiece(currentPlayerX - i,currentPlayerY + i );
+			}
+		}
+		x = currentPlayerX;
+		y = currentPlayerY;
+		tempCounter = 0;
 
 		//Field below
-		while (y + 1 < BOARD_HEIGHT && nextToMove() != board[x][y+1] && null != board[x][y+1])
-			capturePiece(x,y,x,y+1);
+		while (y + 1 < BOARD_HEIGHT && nextToMove() != board[x][y+1] && board[x][y+1] != null) {
+			//	capturePiece(x, y, x, y + 1);
+			tempCounter++;
+			y++;
+		}
+
+		if(y + 1 < BOARD_HEIGHT && board[currentPlayerX][y+1] == nextToMove()){
+			for (int i = 1; i <= tempCounter; i++) {
+				capturePiece(currentPlayerX,currentPlayerY + i);
+			}
+		}
+		x = currentPlayerX;
+		y = currentPlayerY;
+		tempCounter = 0;
 
 		//bottom-right field.
-		while (x + 1 < BOARD_WIDTH && y + 1 < BOARD_HEIGHT && nextToMove() != board[x+1][y+1] && null != board[x+1][y+1])
-			capturePiece(x,y,x+1,y+1);
+		while (x + 1 < BOARD_WIDTH && y + 1 < BOARD_HEIGHT && nextToMove() != board[x+1][y+1] && board[x+1][y+1] != null) {
+			x++;
+			y++;
+			tempCounter++;
+		}
 
-		System.out.println(piecesCaptured + " " + currentPlayer);
+		if(x + 1 <BOARD_WIDTH && y + 1 <BOARD_HEIGHT && board[x+1][y+1] == nextToMove()){
+			for (int i = 1; i <= tempCounter; i++) {
+				capturePiece(currentPlayerX + i,currentPlayerY + i);
+			}
+		}
+
 		return piecesCaptured;
 	}
 
-	private void capturePiece(int xPlayer, int yPlayer, int xCaptured, int yCaptured){
-		board[xPlayer][yPlayer] = nextToMove();
+	private void capturePiece(int xCaptured, int yCaptured){
 		board[xCaptured][yCaptured] = nextToMove();
 		piecesCaptured++;
 	}
@@ -163,12 +263,10 @@ public class ReversiModel {
 		 */
 		if(nextToMove() == PlayerColour.BLACK){
 			blackStones += piecesCaptured + 1;
-		//	if(whiteStones > 0)
-				whiteStones -= piecesCaptured;
+			whiteStones -= piecesCaptured;
 		}else {
 			whiteStones += piecesCaptured + 1;
-		//	if(blackStones > 0 )
-				blackStones -= piecesCaptured;
+			blackStones -= piecesCaptured;
 		}
 	}
 
@@ -184,7 +282,7 @@ public class ReversiModel {
 	public int getNoBlackStones() {
 		return blackStones;
 	}
-	
+
 	/**
 	 * Return the number of white stones currently on the board.
 	 */

@@ -66,6 +66,22 @@ public class ReversiModelAdditionalTests {
     }
 
     @Test
+    public void mustRejectCapturingWhenPieceNotSurrounded() throws IllegalMoveException {
+        this.model.makeMove(BLACK,4,3);
+        this.model.makeMove(WHITE,3,3);
+        this.model.makeMove(BLACK,3,4);
+        this.model.makeMove(WHITE,4,4);
+
+        this.model.makeMove(BLACK,3,2); //4-1
+        assertEquals(1,this.model.getNoWhiteStones());
+        assertEquals(4,this.model.getNoBlackStones());
+
+        this.model.makeMove(WHITE,2,2);//3-3
+        assertEquals(3,this.model.getNoBlackStones());
+        assertEquals(3,this.model.getNoWhiteStones());
+    }
+
+    @Test
     public void mustExecuteCapturingMovesByCapturingMoreThanOnePiece() throws IllegalMoveException {
 
         this.model.makeMove(BLACK,4,3);

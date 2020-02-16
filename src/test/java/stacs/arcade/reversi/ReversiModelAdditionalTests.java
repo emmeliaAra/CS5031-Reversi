@@ -3,8 +3,6 @@ package stacs.arcade.reversi;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.font.TextHitInfo;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -90,6 +88,31 @@ public class ReversiModelAdditionalTests {
         this.model.makeMove(WHITE,4,4);
 
         this.model.makeMove(BLACK,3,2);
+        assertEquals(BLACK,this.model.getAt(3,3));
+
+        this.model.makeMove(WHITE,2,2);
+        assertEquals(WHITE,this.model.getAt(3,3));
+
+        this.model.makeMove(BLACK,1,2);
+        assertEquals(BLACK,this.model.getAt(2,2));
+
+        this.model.makeMove(WHITE,3,5);
+        assertEquals(WHITE,this.model.getAt(3,4));
+
+        this.model.makeMove(BLACK,5,5);
+        assertEquals(BLACK,this.model.getAt(3,3));
+        assertEquals(BLACK,this.model.getAt(4,3));
+    }
+
+    @Test
+    public void mustCountStonesAfterCapturing() throws IllegalMoveException {
+
+        this.model.makeMove(BLACK,4,3);
+        this.model.makeMove(WHITE,3,3);
+        this.model.makeMove(BLACK,3,4);
+        this.model.makeMove(WHITE,4,4);
+
+        this.model.makeMove(BLACK,3,2);
         assertEquals(1,this.model.getNoWhiteStones());
         assertEquals(4,this.model.getNoBlackStones());
 
@@ -97,15 +120,15 @@ public class ReversiModelAdditionalTests {
         assertEquals(3,this.model.getNoBlackStones());
         assertEquals(3,this.model.getNoWhiteStones());
 
-        this.model.makeMove(BLACK,1,2); //5-2
+        this.model.makeMove(BLACK,1,2);
         assertEquals(5,this.model.getNoBlackStones());
         assertEquals(2,this.model.getNoWhiteStones());
 
-        this.model.makeMove(WHITE,3,5); //4-4
+        this.model.makeMove(WHITE,3,5);
         assertEquals(4,this.model.getNoBlackStones());
         assertEquals(4,this.model.getNoWhiteStones());
 
-        this.model.makeMove(BLACK,5,5); //7-2
+        this.model.makeMove(BLACK,5,5);
         assertEquals(7,this.model.getNoBlackStones());
         assertEquals(2,this.model.getNoWhiteStones());
     }
@@ -131,6 +154,5 @@ public class ReversiModelAdditionalTests {
 
         this.model.makeMove(BLACK,4,5);
         assertEquals(this.model.getAt(4, 4), BLACK);
-
     }
 }

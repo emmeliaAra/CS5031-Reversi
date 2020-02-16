@@ -2,6 +2,9 @@ package stacs.arcade.reversi;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.awt.font.TextHitInfo;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -57,6 +60,32 @@ public class ReversiModelAdditionalTests {
     public void mustEnforceTakingTurnAfterMakeMove() throws IllegalMoveException {
         this.model.makeMove(BLACK,3,4);
         assertEquals(WHITE,this.model.nextToMove());
+
+        this.model.makeMove(WHITE,4,4);
+        assertEquals(BLACK,this.model.nextToMove());
     }
 
+    @Test
+    public void mustExecuteCapturingMovesByCapturingMoreThanOnePiece() throws IllegalMoveException {
+
+        this.model.makeMove(BLACK,4,3);
+        this.model.makeMove(WHITE,3,3);
+        this.model.makeMove(BLACK,3,4);
+        this.model.makeMove(WHITE,4,4);
+
+        this.model.makeMove(BLACK,3,2); //4-1
+        assertEquals(1,this.model.getNoWhiteStones());
+        assertEquals(4,this.model.getNoBlackStones());
+
+        this.model.makeMove(WHITE,2,2);//3-3
+        assertEquals(3,this.model.getNoBlackStones());
+        assertEquals(3,this.model.getNoWhiteStones());
+
+        this.model.makeMove(BLACK,1,2); //5-2
+
+        this.model.makeMove(WHITE,3,5); //4-4
+        this.model.makeMove(WHITE,5,5); //7-2
+
+
+    }
 }

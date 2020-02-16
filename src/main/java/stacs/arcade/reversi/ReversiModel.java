@@ -116,16 +116,15 @@ public class ReversiModel {
 
 		//Top-left field
 		while (x - 1 >= 0 && y - 1 >= 0 && nextToMove() != board[x-1][y-1] && null != board[x-1][y-1])
-			capturePiece(x,y,x-1,y-1);
+			capturePiece(x, y, x - 1, y - 1);
 
 		//Field above
 		while (y - 1 >= 0 && nextToMove() != board[x][y-1] && null !=  board[x][y-1])
-			capturePiece(x,y,x,y-1);
+			capturePiece(x, y, x, y - 1);
 
 		//Top-right field
 		while (x + 1 < BOARD_WIDTH && y - 1 >=0 && nextToMove() != board[x+1][y-1]  && null != board[x+1][y-1])
 			capturePiece(x,y,x+1,y-1);
-
 
 		//Field on the left
 		while (x - 1 >= 1 && nextToMove() != board[x-1][y] && null != board[x-1][y])
@@ -147,6 +146,7 @@ public class ReversiModel {
 		while (x + 1 < BOARD_WIDTH && y + 1 < BOARD_HEIGHT && nextToMove() != board[x+1][y+1] && null != board[x+1][y+1])
 			capturePiece(x,y,x+1,y+1);
 
+		System.out.println(piecesCaptured + " " + currentPlayer);
 		return piecesCaptured;
 	}
 
@@ -155,7 +155,7 @@ public class ReversiModel {
 		board[xCaptured][yCaptured] = nextToMove();
 		piecesCaptured++;
 	}
-	
+
 	private void updateStones(){
 		/* Find which player is the one who made a capturing move
 		 * Add the capturing pieces +1 (for the piece that he added to make the capturing move)

@@ -46,4 +46,11 @@ public class ReversiModelAdditionalTests {
     public void mustRejectWhiteAsFirstPlayer() {
         assertThrows(IllegalMoveException.class,() -> this.model.makeMove(WHITE,4,3));
     }
+
+    @Test
+    public void shouldNotAllowPlayerToPlayTwiceInARow() throws IllegalMoveException {
+        this.model.makeMove(BLACK,3,4);
+        assertThrows(IllegalMoveException.class,() -> this.model.makeMove(BLACK,3,3));
+    }
+
 }

@@ -156,25 +156,24 @@ public class ReversiModel {
 		 */
 
 		piecesCaptured = 0 ;
-		checkTopLeftField(x,y);
-		checkTopField(x,y);
-		checkTopRightField(x,y);
-		checkLeftField(x,y);
-		checkRightField(x,y);
-		checkBottomField(x,y);
-		checkBottomLeftField(x,y);
-		checkBottomField(x,y);
-		checkBottomRightField(x,y);
+		checkTopLeftDirection(x,y);
+		checkTopDirection(x,y);
+		checkTopRightDirection(x,y);
+		checkLeftDirection(x,y);
+		checkRightDirection(x,y);
+		checkBottomLeftDirection(x,y);
+		checkBottomDirection(x,y);
+		checkBottomRightDirection(x,y);
 
 		return piecesCaptured;
 	}
 
 	/**
-	 * Checks the top-left field.
+	 * Checks the top-left direction.
 	 * @param currentPlayerX the x position of the field that the player wants to place its piece
 	 * @param currentPlayerY the y position of the field that the player wants to place its piece
 	 */
-	private void checkTopLeftField(int currentPlayerX, int currentPlayerY){
+	private void checkTopLeftDirection(int currentPlayerX, int currentPlayerY){
 		int x = currentPlayerX;
 		int y = currentPlayerY;
 		int tempCounter = 0;
@@ -195,11 +194,11 @@ public class ReversiModel {
 	}
 
 	/**
-	 * Checks the top field.
+	 * Checks the top direction.
 	 * @param currentPlayerX the x position of the field that the player wants to place its piece
 	 * @param currentPlayerY the y position of the field that the player wants to place its piece
 	 */
-	private void checkTopField(int currentPlayerX, int currentPlayerY){
+	private void checkTopDirection(int currentPlayerX, int currentPlayerY){
 		int  x = currentPlayerX;
 		int  y = currentPlayerY;
 		int tempCounter = 0;
@@ -219,11 +218,11 @@ public class ReversiModel {
 	}
 
 	/**
-	 * Checks the top-right field.
+	 * Checks the top-right direction.
 	 * @param currentPlayerX the x position of the field that the player wants to place its piece
 	 * @param currentPlayerY the y position of the field that the player wants to place its piece
 	 */
-	private void checkTopRightField(int currentPlayerX, int currentPlayerY) {
+	private void checkTopRightDirection(int currentPlayerX, int currentPlayerY) {
 		int tempCounter = 0;
 		int  x = currentPlayerX;
 		int  y = currentPlayerY;
@@ -244,11 +243,11 @@ public class ReversiModel {
 	}
 
 	/**
-	 * Checks the left field.
+	 * Checks the left direction.
 	 * @param currentPlayerX the x position of the field that the player wants to place its piece
 	 * @param currentPlayerY the y position of the field that the player wants to place its piece
 	 */
-	private void checkLeftField(int currentPlayerX, int currentPlayerY){
+	private void checkLeftDirection(int currentPlayerX, int currentPlayerY){
 
 		int x = currentPlayerX;
 		int y = currentPlayerY;
@@ -269,11 +268,11 @@ public class ReversiModel {
 	}
 
 	/**
-	 * Checks the right field.
+	 * Checks the right direction.
 	 * @param currentPlayerX the x position of the field that the player wants to place its piece
 	 * @param currentPlayerY the y position of the field that the player wants to place its piece
 	 */
-	private void checkRightField(int currentPlayerX, int currentPlayerY){
+	private void checkRightDirection(int currentPlayerX, int currentPlayerY){
 		int x = currentPlayerX;
 		int y = currentPlayerY;
 		int tempCounter = 0;
@@ -293,11 +292,11 @@ public class ReversiModel {
 	}
 
 	/**
-	 * Checks the bottom-left field.
+	 * Checks the bottom-left direction.
 	 * @param currentPlayerX the x position of the field that the player wants to place its piece
 	 * @param currentPlayerY the y position of the field that the player wants to place its piece
 	 */
-	private void checkBottomLeftField(int currentPlayerX, int currentPlayerY){
+	private void checkBottomLeftDirection(int currentPlayerX, int currentPlayerY){
 		int tempCounter = 0;
 		int x = currentPlayerX;
 		int y = currentPlayerY;
@@ -318,11 +317,11 @@ public class ReversiModel {
 	}
 
 	/**
-	 * Checks the bottom field.
+	 * Checks the bottom direction.
 	 * @param currentPlayerX the x position of the field that the player wants to place its piece
 	 * @param currentPlayerY the y position of the field that the player wants to place its piece
 	 */
-	private void checkBottomField(int currentPlayerX, int currentPlayerY){
+	private void checkBottomDirection(int currentPlayerX, int currentPlayerY){
 		int tempCounter = 0;
 		int x = currentPlayerX;
 		int y = currentPlayerY;
@@ -342,11 +341,11 @@ public class ReversiModel {
 	}
 
 	/**
-	 * Checks the bottom-right field.
+	 * Checks the bottom-right direction.
 	 * @param currentPlayerX the x position of the field that the player wants to place its piece
 	 * @param currentPlayerY the y position of the field that the player wants to place its piece
 	 */
-	private void checkBottomRightField(int currentPlayerX, int currentPlayerY){
+	private void checkBottomRightDirection(int currentPlayerX, int currentPlayerY){
 		int tempCounter = 0;
 		int  x = currentPlayerX;
 		int  y = currentPlayerY;

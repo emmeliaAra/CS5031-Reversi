@@ -127,9 +127,9 @@ public class ReversiModel {
 		return piecesCaptured;
 	}
 
-	private void checkTopLeftField(int x, int y){
-		int currentPlayerX = x;
-		int currentPlayerY = y;
+	private void checkTopLeftField(int currentPlayerX, int currentPlayerY){
+		int x = currentPlayerX;
+		int y = currentPlayerY;
 		int tempCounter = 0;
 
 		while (x - 1 >= 0 && y - 1 >= 0 && nextToMove() != board[x-1][y-1] &&  board[x-1][y-1] != null) {
@@ -145,8 +145,9 @@ public class ReversiModel {
 		}
 	}
 
-	private void checkTopField(int x, int y){
-		int  currentPlayerY = y;
+	private void checkTopField(int currentPlayerX, int currentPlayerY){
+		int  x = currentPlayerX;
+		int  y = currentPlayerY;
 		int tempCounter = 0;
 
 		while (y - 1 >= 0 && nextToMove() != board[x][y-1] &&  board[x][y-1]!= null) {
@@ -156,16 +157,16 @@ public class ReversiModel {
 
 		if(y -1 >= 0  && board[x][y-1] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
-				capturePiece(x,currentPlayerY - i);
+				capturePiece(currentPlayerX,currentPlayerY - i);
 			}
 		}
 	}
 
 
-	private void checkTopRightField(int x, int y) {
+	private void checkTopRightField(int currentPlayerX, int currentPlayerY) {
 		int tempCounter = 0;
-		int currentPlayerX = x;
-		int currentPlayerY = y;
+		int  x = currentPlayerX;
+		int  y = currentPlayerY;
 
 		while (x + 1 < BOARD_WIDTH && y - 1 >= 0 && nextToMove() != board[x + 1][y - 1] && board[x + 1][y - 1] != null) {
 			tempCounter++;
@@ -180,10 +181,11 @@ public class ReversiModel {
 		}
 	}
 
-	private void checkLeftField(int x,int y){
+	private void checkLeftField(int currentPlayerX, int currentPlayerY){
 
+		int x = currentPlayerX;
+		int y = currentPlayerY;
 		int tempCounter = 0;
-		int currentPlayerX = x;
 
 		while (x - 1 >= 1 && nextToMove() != board[x-1][y] && board[x-1][y]!= null) {
 			tempCounter++;
@@ -192,13 +194,14 @@ public class ReversiModel {
 
 		if(x - 1 >=0 && board[x-1][y] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
-				capturePiece(currentPlayerX - i,y);
+				capturePiece(currentPlayerX - i,currentPlayerY);
 			}
 		}
 	}
 
-	private void checkRightField(int x, int y){
-		int currentPlayerX = x;
+	private void checkRightField(int currentPlayerX, int currentPlayerY){
+		int x = currentPlayerX;
+		int y = currentPlayerY;
 		int tempCounter = 0;
 
 		while (x + 1 < BOARD_WIDTH && nextToMove() != board[x+1][y] &&  board[x+1][y] != null) {
@@ -208,15 +211,15 @@ public class ReversiModel {
 
 		if(x + 1 < BOARD_WIDTH && board[x+1][y] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
-				capturePiece(currentPlayerX + i,y);
+				capturePiece(currentPlayerX + i,currentPlayerY);
 			}
 		}
 	}
 
-	private void checkBottomLeftField(int x, int y){
+	private void checkBottomLeftField(int currentPlayerX, int currentPlayerY){
 		int tempCounter = 0;
-		int currentPlayerX = x;
-		int currentPlayerY = y;
+		int x = currentPlayerX;
+		int y = currentPlayerY;
 
 		while (x - 1 >= 0 && y + 1 <= BOARD_HEIGHT && nextToMove() != board[x-1][y+1] && board[x-1][y+1] != null) {
 			tempCounter++;
@@ -231,9 +234,10 @@ public class ReversiModel {
 		}
 	}
 
-	private void checkBottomField(int x, int y){
+	private void checkBottomField(int currentPlayerX, int currentPlayerY){
 		int tempCounter = 0;
-		int currentPlayerY = y;
+		int x = currentPlayerX;
+		int y = currentPlayerY;
 
 		while (y + 1 < BOARD_HEIGHT && nextToMove() != board[x][y+1] && board[x][y+1] != null) {
 			tempCounter++;
@@ -242,15 +246,15 @@ public class ReversiModel {
 
 		if(y + 1 < BOARD_HEIGHT && board[x][y+1] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
-				capturePiece(x,currentPlayerY + i);
+				capturePiece(currentPlayerX,currentPlayerY + i);
 			}
 		}
 	}
 
-	private void checkBottomRightField(int x, int y){
+	private void checkBottomRightField(int currentPlayerX, int currentPlayerY){
 		int tempCounter = 0;
-		int currentPlayerX = x;
-		int currentPlayerY = y;
+		int  x = currentPlayerX;
+		int  y = currentPlayerY;
 
 		while (x + 1 < BOARD_WIDTH && y + 1 < BOARD_HEIGHT && nextToMove() != board[x+1][y+1] && board[x+1][y+1] != null) {
 			tempCounter++;

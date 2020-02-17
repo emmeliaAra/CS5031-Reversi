@@ -80,8 +80,12 @@ public class ReversiModel {
 		 * Checks if the move is one of the 4 initial moves - If yes calls method to handle appropriately.
 		 * If not 4 initial moves calls method to check if that move will result to a the capture of a piece - If not throws illegalMoveException.
 		 */
-		checkValidPlayer(player);
-		checkBoundaries(x,y);
+
+		if(!isValidPlayer(player))
+			throw new IllegalMoveException(illegalMoveMessage + "This is not your turn, you cannot perform that move now.");
+
+		if(!isWithingBoundaries(x,y))
+			throw new IllegalMoveException(illegalMoveMessage + "Field does not exists");
 
 		if(totalMoves < CONSTRAINED_MOVES){
 			handleFourInitialMoves(x,y);
@@ -101,11 +105,10 @@ public class ReversiModel {
 	 * This method compares the PlayerColour value passed in the makeMove method with the nextToMove() method's
 	 * return variable to validate that the correct player is making a move.
 	 * @param playerColour the Colour of player that to check.
-	 * @throws IllegalMoveException if the playerColour does not match the return value of the nextToMove method.
+	 * @return true if the playerColour  is the next player to move, false otherwise.
 	 */
-	private void checkValidPlayer(PlayerColour playerColour) throws IllegalMoveException{
-		if(playerColour != nextToMove())
-			throw new IllegalMoveException(illegalMoveMessage + "This is not your turn, you cannot perform that move now.");
+	private boolean isValidPlayer(PlayerColour playerColour){
+		return playerColour == nextToMove();
 	}
 
 	/**
@@ -113,12 +116,10 @@ public class ReversiModel {
 	 * Valid fields have x and y values from 0-7
 	 * @param x the x position of the field that the player wants to place its piece
 	 * @param y the y position of the field that the player wants to place its piece
-	 * @throws IllegalMoveException when the field is not valid.
+	 * @return true if the field exists, false otherwise.
 	 */
-	private void checkBoundaries(int x, int y) throws IllegalMoveException{
-		if(x < 0 || x >= BOARD_WIDTH || y < 0 || y >= BOARD_HEIGHT) {
-			throw new IllegalMoveException(illegalMoveMessage + "Field does not exists");
-		}
+	private boolean isWithingBoundaries(int x, int y){
+		return x >= 0 && x < BOARD_WIDTH && y >= 0 && y < BOARD_HEIGHT;
 	}
 
 	/**

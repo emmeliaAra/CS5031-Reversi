@@ -3,9 +3,7 @@ package stacs.arcade.reversi;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import static org.junit.jupiter.api.Assertions.*;
 import static stacs.arcade.reversi.ReversiModel.PlayerColour.WHITE;
 import static stacs.arcade.reversi.ReversiModel.PlayerColour.BLACK;
 
@@ -45,11 +43,6 @@ public class ReversiModelAdditionalTests {
         assertEquals(2,this.model.getNoBlackStones());
         assertEquals(BLACK,this.model.getAt(4,3));
         assertEquals(BLACK,this.model.getAt(3,4));
-    }
-
-    @Test
-    public void mustRejectWhiteAsFirstPlayer() {
-        assertThrows(IllegalMoveException.class,() -> this.model.makeMove(WHITE,4,3));
     }
 
     @Test
@@ -158,5 +151,62 @@ public class ReversiModelAdditionalTests {
 
         this.model.makeMove(BLACK,4,5);
         assertEquals(this.model.getAt(4, 4), BLACK);
+    }
+
+    @Test
+    public void mustCaptureInMultipleDimensions() throws IllegalMoveException{
+
+        this.model.makeMove(BLACK,3,3);
+        this.model.makeMove(WHITE,3,4);
+        this.model.makeMove(BLACK,4,3);
+        this.model.makeMove(WHITE,4,4);
+
+        this.model.makeMove(BLACK,5,5);
+        this.model.makeMove(WHITE,3,2);
+        this.model.makeMove(BLACK,2,2);
+        this.model.makeMove(WHITE,5,4);
+
+        assertEquals(WHITE,this.model.getAt(4,4));
+        assertEquals(WHITE,this.model.getAt(4,3));
+    }
+
+    @Test
+    public void mustAllowValidPieceInTheCorners() throws IllegalMoveException{
+
+        this.model.makeMove(BLACK,3,3);
+        this.model.makeMove(WHITE,3,4);
+        this.model.makeMove(BLACK,4,3);
+        this.model.makeMove(WHITE,4,4);
+
+        this.model.makeMove(BLACK,5,5);
+        this.model.makeMove(WHITE,3,2);
+        this.model.makeMove(BLACK,2,2);
+        this.model.makeMove(WHITE,5,4);
+        this.model.makeMove(BLACK,3,5);
+        this.model.makeMove(WHITE,6,6);
+        this.model.makeMove(BLACK,7,7); // BOTTOM RIGHT CORNER
+
+        this.model.makeMove(WHITE,2,5);
+        this.model.makeMove(BLACK,4,2);
+        this.model.makeMove(WHITE,5,2);
+        this.model.makeMove(BLACK,6,2);
+        this.model.makeMove(WHITE,4,5);
+        this.model.makeMove(BLACK,1,6);
+        this.model.makeMove(WHITE,1,1);
+        this.model.makeMove(BLACK,0,0); // TOP LEFT CORNER
+
+        this.model.makeMove(WHITE,4,1);
+        this.model.makeMove(BLACK,3,6);
+        this.model.makeMove(WHITE,6,1);
+        this.model.makeMove(BLACK,7,0); // TOP RIGHT CORNER
+
+        this.model.makeMove(WHITE,2,4);
+        this.model.makeMove(BLACK,6,5);
+        this.model.makeMove(WHITE,0,7); // BOTTOM LEFT CORNER
+
+        assertNotEquals(null,this.model.getAt(0,0));
+        assertNotEquals(null,this.model.getAt(0,7));
+        assertNotEquals(null,this.model.getAt(7,7));
+        assertNotEquals(null,this.model.getAt(7,0));
     }
 }

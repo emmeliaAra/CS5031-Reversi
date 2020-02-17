@@ -9,7 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static stacs.arcade.reversi.ReversiModel.PlayerColour.WHITE;
 import static stacs.arcade.reversi.ReversiModel.PlayerColour.BLACK;
 
-
+/**
+ * A set of unit tests for the model class of the Reversi game.
+ *
+ * @author 190023753
+ */
 public class ReversiModelAdditionalTests {
 
     ReversiModel model = null;

@@ -178,14 +178,16 @@ public class ReversiModel {
 		int x = currentPlayerX;
 		int y = currentPlayerY;
 		int tempCounter = 0;
+		boolean isInRange = isWithingBoundaries(x - 1,y - 1);
 
-		while (x - 1 >= 0 && y - 1 >= 0 && nextToMove() != board[x-1][y-1] &&  board[x-1][y-1] != null) {
+		while ( isInRange && nextToMove() != board[x-1][y-1] &&  board[x-1][y-1] != null) {
 			tempCounter ++;
 			x --;
 			y--;
 		}
 
-		if(x - 1 >= 0 && y - 1 >= 0 && board[x-1][y-1] == nextToMove()){
+		isInRange = isWithingBoundaries(x - 1, y - 1);
+		if(isInRange && board[x-1][y-1] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
 				capturePiece(currentPlayerX - i,currentPlayerY - i );
 			}
@@ -201,13 +203,15 @@ public class ReversiModel {
 		int  x = currentPlayerX;
 		int  y = currentPlayerY;
 		int tempCounter = 0;
+		boolean isInRange = isWithingBoundaries(x, y - 1);
 
-		while (y - 1 >= 0 && nextToMove() != board[x][y-1] &&  board[x][y-1]!= null) {
+		while (isInRange && nextToMove() != board[x][y-1] &&  board[x][y-1]!= null) {
 			tempCounter++;
 			y --;
 		}
 
-		if(y -1 >= 0  && board[x][y-1] == nextToMove()){
+		isInRange = isWithingBoundaries(x, y - 1);
+		if(isInRange  && board[x][y-1] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
 				capturePiece(currentPlayerX,currentPlayerY - i);
 			}
@@ -223,14 +227,16 @@ public class ReversiModel {
 		int tempCounter = 0;
 		int  x = currentPlayerX;
 		int  y = currentPlayerY;
+		boolean isInRange = isWithingBoundaries(x + 1, y - 1);
 
-		while (x + 1 < BOARD_WIDTH && y - 1 >= 0 && nextToMove() != board[x + 1][y - 1] && board[x + 1][y - 1] != null) {
+		while (isInRange && nextToMove() != board[x + 1][y - 1] && board[x + 1][y - 1] != null) {
 			tempCounter++;
 			x++;
 			y--;
 		}
 
-		if (x + 1 < BOARD_WIDTH && y - 1 >= 0 && board[x + 1][y - 1] == nextToMove()) {
+		isInRange = isWithingBoundaries(x + 1, y - 1);
+		if (isInRange && board[x + 1][y - 1] == nextToMove()) {
 			for (int i = 1; i <= tempCounter; i++) {
 				capturePiece(currentPlayerX + i, currentPlayerY - i);
 			}
@@ -247,13 +253,15 @@ public class ReversiModel {
 		int x = currentPlayerX;
 		int y = currentPlayerY;
 		int tempCounter = 0;
+		boolean isInRange = isWithingBoundaries(x - 1, y);
 
-		while (x - 1 >= 1 && nextToMove() != board[x-1][y] && board[x-1][y]!= null) {
+		while (isInRange && nextToMove() != board[x-1][y] && board[x-1][y]!= null) {
 			tempCounter++;
 			x--;
 		}
 
-		if(x - 1 >=0 && board[x-1][y] == nextToMove()){
+		isInRange = isWithingBoundaries(x - 1, y);
+		if(isInRange && board[x-1][y] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
 				capturePiece(currentPlayerX - i,currentPlayerY);
 			}
@@ -269,13 +277,15 @@ public class ReversiModel {
 		int x = currentPlayerX;
 		int y = currentPlayerY;
 		int tempCounter = 0;
+		boolean isInRange = isWithingBoundaries(x + 1, y);
 
-		while (x + 1 < BOARD_WIDTH && nextToMove() != board[x+1][y] &&  board[x+1][y] != null) {
+		while (isInRange && nextToMove() != board[x+1][y] &&  board[x+1][y] != null) {
 			tempCounter++;
 			x++;
 		}
 
-		if(x + 1 < BOARD_WIDTH && board[x+1][y] == nextToMove()){
+		isInRange = isWithingBoundaries(x + 1, y);
+		if(isInRange && board[x+1][y] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
 				capturePiece(currentPlayerX + i,currentPlayerY);
 			}
@@ -291,14 +301,16 @@ public class ReversiModel {
 		int tempCounter = 0;
 		int x = currentPlayerX;
 		int y = currentPlayerY;
+		boolean isInRange = isWithingBoundaries(x - 1, y + 1);
 
-		while (x - 1 >= 0 && y + 1 <= BOARD_HEIGHT && nextToMove() != board[x-1][y+1] && board[x-1][y+1] != null) {
+		while (isInRange && nextToMove() != board[x-1][y+1] && board[x-1][y+1] != null) {
 			tempCounter++;
 			x--;
 			y++;
 		}
 
-		if(x - 1 >=0 && y + 1 < BOARD_HEIGHT && board[x-1][y+1] == nextToMove()){
+		isInRange = isWithingBoundaries(x - 1, y + 1);
+		if(isInRange && board[x-1][y+1] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
 				capturePiece(currentPlayerX - i,currentPlayerY + i );
 			}
@@ -314,13 +326,15 @@ public class ReversiModel {
 		int tempCounter = 0;
 		int x = currentPlayerX;
 		int y = currentPlayerY;
+		boolean isInRange = isWithingBoundaries(x,y + 1);
 
-		while (y + 1 < BOARD_HEIGHT && nextToMove() != board[x][y+1] && board[x][y+1] != null) {
+		while (isInRange && nextToMove() != board[x][y+1] && board[x][y+1] != null) {
 			tempCounter++;
 			y++;
 		}
 
-		if(y + 1 < BOARD_HEIGHT && board[x][y+1] == nextToMove()){
+		isInRange = isWithingBoundaries(x, y + 1);
+		if(isInRange && board[x][y+1] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
 				capturePiece(currentPlayerX,currentPlayerY + i);
 			}
@@ -336,14 +350,16 @@ public class ReversiModel {
 		int tempCounter = 0;
 		int  x = currentPlayerX;
 		int  y = currentPlayerY;
+		boolean isInRange = isWithingBoundaries(x + 1, y + 1);
 
-		while (x + 1 < BOARD_WIDTH && y + 1 < BOARD_HEIGHT && nextToMove() != board[x+1][y+1] && board[x+1][y+1] != null) {
+		while (isInRange && nextToMove() != board[x+1][y+1] && board[x+1][y+1] != null) {
 			tempCounter++;
 			x++;
 			y++;
 		}
 
-		if(x + 1 <BOARD_WIDTH && y + 1 <BOARD_HEIGHT && board[x+1][y+1] == nextToMove()){
+		isInRange = isWithingBoundaries(x + 1, y + 1);
+		if(isInRange && board[x+1][y+1] == nextToMove()){
 			for (int i = 1; i <= tempCounter; i++) {
 				capturePiece(currentPlayerX + i,currentPlayerY + i);
 			}
